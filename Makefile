@@ -1,4 +1,14 @@
-NAME = 'docker-kustomize-kubeval'
+VERSION ?= $(shell cat VERSION)
 
-build:
-	docker build -t ${NAME} .
+IMG_REPO ?= rafaelcalleja
+IMG_TAG ?= $(VERSION)
+IMG_NAME ?= docker-kustomize-kubeval
+
+default: image
+
+image:
+	docker build -t $(IMG_REPO)/$(IMG_NAME):$(IMG_TAG) -f Dockerfile \
+	.
+
+push:
+	docker push $(IMG_REPO)/$(IMG_NAME):$(IMG_TAG)
